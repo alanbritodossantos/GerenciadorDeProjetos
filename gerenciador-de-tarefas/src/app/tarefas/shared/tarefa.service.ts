@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Tarefa } from './';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class TarefaService {
   constructor() {}
 
@@ -19,5 +17,35 @@ export class TarefaService {
     localStorage['tarefa'] = JSON.stringify(tarefas);
   }
 
+  buscarPorId(id: number): Tarefa {
+    const tarefas: Tarefa[] = this.listarTodos();
+    return tarefas.find(tarefa => tarefa.id === id);
+  }
 
+  atualizar(tarefa: Tarefa): void {
+    const tarefas: Tarefa[] = this.listarTodos();
+    tarefas.forEach((obj, posicaoIndiceIndex, objs) => {
+      if (tarefa.id === obj.id) {
+        objs[posicaoIndiceIndex] = tarefa;
+      }
+    });
+    localStorage['tarefas'] = JSON.stringify(tarefas);
+  }
+
+  remover(id: number): void {
+    let tarefas: Tarefa[] = this.listarTodos();
+    tarefas = tarefas.filter((tarefa) => tarefa.id !== id);
+    localStorage['tarefas'] = JSON.stringify(tarefas);
+  }
+
+  alterarStatus(id: number): void {
+    const tarefas: Tarefa[] = this.listarTodos();
+    tarefas.forEach((obj, index, objs) => {
+      if (id === obj.id) {
+        objs[index].concluida = !obj.concluida;
+      }
+    });
+
+    localStorage['tarefas'] = JSON.stringify(tarefas);
+  }
 }
