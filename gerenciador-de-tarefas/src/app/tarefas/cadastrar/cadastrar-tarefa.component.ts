@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./cadastrar-tarefa.component.css'],
 })
 export class CadastrarTarefaComponent implements OnInit {
-  @ViewChild('formTarefa') formTarefa: NgForm;
+  @ViewChild('formTarefa', { static: true }) formTarefa: NgForm;
   tarefa: Tarefa;
 
   constructor(private tarefaService: TarefaService, private router: Router) {}
@@ -22,7 +22,7 @@ export class CadastrarTarefaComponent implements OnInit {
   cadastrar(): void {
     if (this.formTarefa.form.valid) {
       this.tarefaService.cadastrar(this.tarefa);
-      this.router.navigate(['/tarefas']);
+      this.router.navigate(["/tarefas"]);
     }
   }
 }
